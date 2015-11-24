@@ -55,9 +55,9 @@ docs/_build/
 # PyBuilder
 target/
 
-eventus/apps/events/migrations/
-eventus/apps/events/migrations/*
-eventus/apps/users/migrations/
-eventus/apps/users/migrations/*
-eventus/manage.py
-eventus/eventus/wsgi.py
+certificado_digital/apps/events/migrations/
+certificado_digital/apps/events/migrations/*
+certificado_digital/apps/users/migrations/
+certificado_digital/apps/users/migrations/*
+certificado_digital/manage.py
+certificado_digital/certificado_digital/wsgi.py
