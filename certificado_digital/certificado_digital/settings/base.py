@@ -1,4 +1,5 @@
 import os
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -11,6 +12,7 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 DJANGO_APPS = (
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -20,7 +22,9 @@ DJANGO_APPS = (
 )
 
 LOCAL_APPS = (
-    'apps.certificado',
+    'apps.certificados',
+    'apps.eventos',
+    'apps.usuarios',
 )
 
 THIRD_PARTY_APPS = (
@@ -57,9 +61,19 @@ TEMPLATES = [
     },
 ]
 
+
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
+)
+
+SUIT_CONFIG = {
+    'ADMIN_NAME': 'Certificados Digitales'
+}
+
+
 WSGI_APPLICATION = 'certificado_digital.wsgi.application'
 
-LANGUAGE_CODE = 'en-es'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -68,3 +82,5 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+AUTH_USER_MODEL = 'usuarios.User'

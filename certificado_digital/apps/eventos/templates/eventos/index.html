@@ -1,0 +1,127 @@
+{% extends "eventos/base_eventos.html" %}
+
+{% block title %}Consulta de Certificado Digital - Q+TEC{% endblock title %}
+
+{% block tipobody %}
+<body class="hold-transition skin-blue layout-top-nav">
+{% endblock tipobody %}
+
+
+{% load staticfiles %}
+
+{% block content %}
+<div class="wrapper">
+
+      <header class="main-header">
+        <nav class="navbar navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a href="#" class="navbar-brand"><b>CERTIFICADO DIGITAL</b></a>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                <i class="fa fa-bars"></i>
+              </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="#">Privacidad y Seguridad</a></li>
+                <li><a href="#">Ayuda</a></li>
+                <li><a href="#">Términos y Condiciones</a></li>
+                <li><a href="#">Contáctenos</a></li>
+                <li><a href="#">Tarifas</a></li>                
+              </ul>             
+            </div><!-- /.navbar-collapse -->
+            <!-- Navbar Right Menu -->
+              <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">                  
+                  <!-- User Account Menu -->
+                  <li><a href="{% url 'eventos_app:panel' %}">Login</a></li> 
+                </ul>
+              </div><!-- /.navbar-custom-menu -->
+          </div><!-- /.container-fluid -->
+        </nav>
+      </header>
+      <!-- Full Width Column -->
+      <div class="content-wrapper">
+        <div class="container">
+          <!-- Content Header (Page header) -->
+          <section class="content-header">
+            <!--h1>
+              Consulta de Validez de Certificado Digital
+            </h1-->           
+          </section>
+
+          <!-- Main content -->
+          <section class="content">           
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Consulte la Validez de su Certificado</h3>
+              </div>
+              <div class="box-body">
+              <div class="col-md-8">
+
+                <p>Este servicio permite verificar la Validez del Certificado de los eventos asistidos. La consulta se obtiene ingresando sólo el número del Certificado , pudiendo imprimir la constancia respectiva. </p>
+
+                  <!-- form start -->               
+                  <!--div class="input-group">
+             			<input type="text" name="qq" class="form-control" placeholder="Ingrese Codigo de verificacion">
+              			<span class="input-group-btn">
+                		<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+              			</span>
+          		  	</div-->
+
+                  <form role="form" method="POST">{% csrf_token %}
+                  <div class="box-body">
+                     <div class="form-group">
+                        <label for="exampleInputText">Código de Verificación</label>
+                        {{ form_buscar.name }}
+                        {{ form_buscar.name.errors }}
+                    </div> 
+                  </div><!-- /.box-body -->
+
+                  <div class="box-footer">
+                    <button type="submit" name = "buscar_codigo_form" class="btn btn-primary">Enviar</button>
+                  </div>
+                 </form>
+                
+
+            <!--div class="row contenedor-eventos">
+            {% for event in events %}
+            <div class="col-sm-1 col-md-3">
+              <div class="thumbnail">
+                <div class="caption">
+                <h4><a href="">{{ event.name }}</a></h4>
+                <small class="fecha">{{ event.start }}</small>
+                  <div class="lugar">
+                  <small class="lugar">{{ event.place }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% endfor %}
+            </div-->
+            
+            </div>
+            <div class="col-md-4">
+            <img class="img-responsive pad" src="{% static 'dist/img/QR-code.png' %}" alt="">
+            </div>
+
+              </div><!-- /.box-body -->
+            </div><!-- /.box -->
+          </section><!-- /.content -->
+        </div><!-- /.container -->
+      </div><!-- /.content-wrapper -->
+      <footer class="main-footer">
+        <div class="container">
+          <div class="pull-right hidden-xs">
+            <b>Version</b> 1.0
+          </div>
+          <strong>Copyright &copy; 2015 <a href="http://wwww.qtc.pe">Q+TEC SAC</a>.</strong> Todos los Derechos reservados.
+        </div><!-- /.container -->
+      </footer>
+    </div><!-- ./wrapper -->
+
+
+{% endblock content %}
