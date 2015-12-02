@@ -19,9 +19,11 @@ class EventoForm(forms.ModelForm):
 		}
 
 class SearchForm(forms.Form):
-	name = forms.CharField(max_length=13,
+	codigo = forms.CharField(max_length=13,
 		widget = forms.TextInput(attrs = {
+			'id' : 'codigo',
 			'class' : 'form-control', 
 			'placeholder' : 'Ingresa Codigo de Verificacion',
 			'autocomplete' : 'off',
+			'required' : 'required'
 			}))

@@ -1,10 +1,10 @@
 from django.conf.urls import include, url
-from .views import IndexView, MainPanelView, buscar
+from . import views
 
 urlpatterns = [
-	url(r'^$', IndexView.as_view(), name="index"),
-	url(r'^panel/$', MainPanelView.as_view(), name="panel"),
-	url(r'^buscar/$', buscar, name="buscar"),
+	url(r'^$', views.IndexView.as_view(), name="index"),
+	url(r'^panel/$', views.MainPanelView.as_view(), name="panel"),	
+	url(r'^busqueda_certificado/$', views.busqueda_certificado, name="busqueda_certificado"),
 	#url(r'^panel/evento/nuevo/$', CreateEvento.as_view(), name="nuevo"),
 	# url(r'^panel/evento/(?P<pk>\d+)/$', DetailEvento.as_view(), name="detalle"),
 	# url(r'^panel/evento/editar/(?P<pk>\d+)/$', EditEvento.as_view(), name="editar"),

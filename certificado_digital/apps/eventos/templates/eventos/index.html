@@ -29,14 +29,14 @@
                 <li><a href="#">Ayuda</a></li>
                 <li><a href="#">Términos y Condiciones</a></li>
                 <li><a href="#">Contáctenos</a></li>
-                <li><a href="#">Tarifas</a></li>                
-              </ul>             
+                <li><a href="#">Tarifas</a></li>
+              </ul>
             </div><!-- /.navbar-collapse -->
             <!-- Navbar Right Menu -->
               <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">                  
+                <ul class="nav navbar-nav">
                   <!-- User Account Menu -->
-                  <li><a href="{% url 'eventos_app:panel' %}">Login</a></li> 
+                  <li><a href="{% url 'eventos_app:panel' %}">Login</a></li>
                 </ul>
               </div><!-- /.navbar-custom-menu -->
           </div><!-- /.container-fluid -->
@@ -49,11 +49,11 @@
           <section class="content-header">
             <!--h1>
               Consulta de Validez de Certificado Digital
-            </h1-->           
+            </h1-->
           </section>
 
           <!-- Main content -->
-          <section class="content">           
+          <section class="content">
             <div class="box box-primary">
               <div class="box-header with-border">
                 <h3 class="box-title">Consulte la Validez de su Certificado</h3>
@@ -61,48 +61,29 @@
               <div class="box-body">
               <div class="col-md-8">
 
-                <p>Este servicio permite verificar la Validez del Certificado de los eventos asistidos. La consulta se obtiene ingresando sólo el número del Certificado , pudiendo imprimir la constancia respectiva. </p>
+                <p>Este servicio permite verificar la Validez del Certificado de los eventos asistidos.</p>
 
-                  <!-- form start -->               
-                  <!--div class="input-group">
-             			<input type="text" name="qq" class="form-control" placeholder="Ingrese Codigo de verificacion">
-              			<span class="input-group-btn">
-                		<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              			</span>
-          		  	</div-->
 
-                  <form role="form" method="POST">{% csrf_token %}
+                  <!--form role="form" action="" method="POST"-->
                   <div class="box-body">
                      <div class="form-group">
                         <label for="exampleInputText">Código de Verificación</label>
-                        {{ form_buscar.name }}
-                        {{ form_buscar.name.errors }}
-                    </div> 
+                        {{ form_buscar.codigo }}
+                        {{ form_buscar.codigo.errors }}
+                    </div>
                   </div><!-- /.box-body -->
 
                   <div class="box-footer">
-                    <button type="submit" name = "buscar_codigo_form" class="btn btn-primary">Enviar</button>
+                    <button type="submit" name="b_codigo" id="b_codigo" class="btn btn-primary">Enviar</button>
                   </div>
-                 </form>
-                
+                 <!--/form-->
+                  
+                  <div id="resultado_codigo">
+                   
+                  </div>               
+             
 
-            <!--div class="row contenedor-eventos">
-            {% for event in events %}
-            <div class="col-sm-1 col-md-3">
-              <div class="thumbnail">
-                <div class="caption">
-                <h4><a href="">{{ event.name }}</a></h4>
-                <small class="fecha">{{ event.start }}</small>
-                  <div class="lugar">
-                  <small class="lugar">{{ event.place }}</small>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            {% endfor %}
-            </div-->
-            
             </div>
             <div class="col-md-4">
             <img class="img-responsive pad" src="{% static 'dist/img/QR-code.png' %}" alt="">
@@ -123,5 +104,40 @@
       </footer>
     </div><!-- ./wrapper -->
 
+<script>
+  $('#b_codigo').click(function(e){
+ codigo_certificado = $("#codigo").val();
+ if(codigo_certificado.length < 13 ||  codigo_certificado.length >13)
+ {
+    $('#resultado_codigo').html("<p>El código del certificado debe tener 13 Digitos</p>");
+ }
+ else{
+   
+   $.ajax({
+   data: {'codigo_certificado': codigo_certificado},
+   url: '/busqueda_certificado/',
+   type: 'get',
+   success : function(data) {                     
+           var object = JSON.parse(data);
+           if(object.guid)
+           {
+            var rcodigo = '<h2 class="page-header">Resultado de la Búsqueda</h2><table class="table table-striped"><thead><tr><th>Descripcion</th><th>Detalle</th></tr></thead><tbody><tr><td>CÓDIGO</td>                    <td>'+ object.guid +'</td></tr><tr><td>EVENTO</td><td>'+ object.evento +'</td></tr><tr><td>FECHA</td><td>14-10-2015</td></tr><tr><td>HORAS ACADÉMICAS</td><td>40 </td></tr><tr><td>PARTICIPANTE</td><td>Julio Perez </td></tr><tr><td>CERTIFICADOR</td><td>UNP, Fundación del Norte</td></tr><tr><td>ORGANIZADOR</td><td>QTEC </td></tr></tbody></table>';
+
+            $('#resultado_codigo').html(rcodigo);
+           }else{
+              $('#resultado_codigo').html('<h2 class="page-header">Resultado de la Búsqueda</h2><p>Este código ' + codigo_certificado + ', no esta asociado a ningún Certificado</p>');
+           }          
+
+   },
+   error : function(message) {
+           console.log(message);
+
+        }
+   });
+
+ }
+});
+   
+</script>
 
 {% endblock content %}

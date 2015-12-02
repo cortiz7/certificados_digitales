@@ -1,3 +1,5 @@
+#encoding:utf-8
+
 from django.db import models
 
 from django.template.defaultfilters import slugify
@@ -72,8 +74,8 @@ class Assistant(TimeStampModel):
 
 class Certificate(models.Model):
 
-	guid = models.CharField(max_length=250, unique=True, null=False, blank=False, default=uuid4)
+	guid = models.CharField(max_length=255, unique=True, null=False, blank=False, default=uuid4)
 	event = models.ForeignKey(Event)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.guid
